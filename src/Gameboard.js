@@ -1,25 +1,8 @@
-<<<<<<< HEAD
-import './styles.css'; 
-=======
-require('./styles.css');
-class Ship{
-    constructor(length,name='default'){
-        this.length=length;
-        this.hits=0;
-        this.name=name
-
-    }
-    hit(){
-        this.hits++;
-    }
-    isSunk(){
-        return this.hits >= this.length;
-    }
-}
 class GameBoard{
     constructor(size=10){
         this.size=size;
         this.ships=[];
+        this.hits=[];
         this.misses=[];
         this.board=this.createEmptyBoard();
 
@@ -33,8 +16,13 @@ class GameBoard{
     }
     letterToNum(coordinates) {
         const x = coordinates[0].toUpperCase().charCodeAt(0) - 65;
-        return [x, parseInt(coordinates[1])];
+        return [parseInt(coordinates[1]),x];
     }
+    areAllShipsSunk() {
+        return this.ships.every(entry => entry.ship.isSunk());
+    }
+    
+    
     placeShip(ship,coordinates,length,direction){
        
         const [row, col] = this.letterToNum(coordinates);
@@ -42,7 +30,7 @@ class GameBoard{
         if (direction=='horizontal'){
             if (this.isValidHorizontalPlacement(row,col,length)==true){
                 for(let i=0;i<length;i++){
-                    this.board[row][col+i]=ship
+                    this.board[row][col+i]=ship.name
                 }
                 this.ships.push({ship,coordinates:this.getHorizontalCoordinates(row,col,length)})
             }
@@ -54,13 +42,13 @@ class GameBoard{
                 for(let i=0;i<length;i++){
                     this.board[row+i][col]=ship
                 }
-                his.ships.push({ship,coordinates:this.getVerticalCoordinates(row,col,length)})
+                this.ships.push({ship,coordinates:this.getVerticalCoordinates(row,col,length)})
             }
 
 
 
         }
-        console.log('invalid direction')
+        // return this.ships
 
     }
     isValidHorizontalPlacement(row,col,length){
@@ -81,7 +69,7 @@ class GameBoard{
 
         }
         for(let i=0;i<length;i++){
-            if(this.board[row+1][col]!==null){
+            if(this.board[row+i][col]!==null){
                 return false
             }
         }
@@ -90,7 +78,7 @@ class GameBoard{
     getHorizontalCoordinates(row,col,length){
         let coordinates=[]
          for(let i = 0;i<length;i++){
-            coordinates.push(row,col+i)
+            coordinates.push([row,col+i])
          }
          return coordinates
     
@@ -98,51 +86,33 @@ class GameBoard{
     getVerticalCoordinates(row,col,length){
         let coordinates=[]
          for(let i = 0;i<length;i++){
-            coordinates.push(row+i,col)
+            coordinates.push([row+i,col])
          }
          return coordinates
     
     }
     receiveAttack(coordinates){
-        message='';
-    const [row, col] = this.letterToNum(coordinates);
-        if(this.board=='hit' ||row>this.size ||col>this.size){
-            
-            message='invalid spot'
-            return message
+       
+        const [row, col] = this.letterToNum(coordinates);
+        if (row<0||col<0||row>=globalThis.size||col>=globalThis.size){
+            return "Invalid spot: out of bounds.";
         }
-        else if (this.board[row,col]==null){
-            message="MISS!!!!";
-            return message;
-
+        if(this.board[row][col]=='hit' || this.board[row][col]=='miss'){
+            return "Invalid spot: already attacked.";
+        }
+        if(this.board[row][col]==null){
+            this.board[row][col]="miss"
+            this.misses.push([row, col]); 
+            return "MISS!!!!";
         }
         this.board[row][col]='hit'
-        for(ship,scoordinates in this.ships){
-            if (coordinates in scoordinates){
+        this.hits.push([row, col])
+        for(const{ship,coordinates }of this.ships){
+            if(coordinates.some(([r,c])=> r===row && c===col)){
                 ship.hit()
+
+                return ship.isSunk() ? `Hit! You sunk the ${ship.name}!` : "Hittt!";
             }
         }
-        message='Hittt'
-        return message
-
-
     }
 }
-class Player{
-    constructor(name='default',isComputer = false){
-        this.name = name;
-        this.isComputer = false;
-        this.gameboard=new GameBoard()
-
-    }
-    attack(opp,coordinates){
-        return opp.gameboard.receiveAttack(coordinates)
-
-    }
-
-}
-ship=new GameBoard();
-console.log(ship.board)
-console.log("asdsad")
-module.exports={Ship,GameBoard}
->>>>>>> bc62416 (fixes)
