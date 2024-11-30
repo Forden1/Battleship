@@ -1,148 +1,22 @@
-<<<<<<< HEAD
-import './styles.css'; 
-=======
-require('./styles.css');
-class Ship{
-    constructor(length,name='default'){
-        this.length=length;
-        this.hits=0;
-        this.name=name
-
-    }
-    hit(){
-        this.hits++;
-    }
-    isSunk(){
-        return this.hits >= this.length;
-    }
-}
-class GameBoard{
-    constructor(size=10){
-        this.size=size;
-        this.ships=[];
-        this.misses=[];
-        this.board=this.createEmptyBoard();
-
-    }
-    createEmptyBoard(){
-        const board=[]
-        for(let i=0;i<this.size;i++){
-            board.push(Array(this.size).fill(null))
-        }
-        return board
-    }
-    letterToNum(coordinates) {
-        const x = coordinates[0].toUpperCase().charCodeAt(0) - 65;
-        return [x, parseInt(coordinates[1])];
-    }
-    placeShip(ship,coordinates,length,direction){
-       
-        const [row, col] = this.letterToNum(coordinates);
-        
-        if (direction=='horizontal'){
-            if (this.isValidHorizontalPlacement(row,col,length)==true){
-                for(let i=0;i<length;i++){
-                    this.board[row][col+i]=ship
-                }
-                this.ships.push({ship,coordinates:this.getHorizontalCoordinates(row,col,length)})
-            }
-
-        }
-        else if(direction=='vertical'){
-
-            if (this.isValidVerticalPlacement(row,col,length)==true){
-                for(let i=0;i<length;i++){
-                    this.board[row+i][col]=ship
-                }
-                his.ships.push({ship,coordinates:this.getVerticalCoordinates(row,col,length)})
-            }
+import'./styles.css';
+import { displayGrid } from './UI';
+import { Player } from './Player';
+import { GameBoard } from './Gameboard';
+import { Ship } from './Ship';
+import { setupBoardClickHandler } from './GameController';
 
 
-
-        }
-        console.log('invalid direction')
-
-    }
-    isValidHorizontalPlacement(row,col,length){
-        if (col+length>this.size){
-            return false
-
-        }
-        for(let i=0;i<length;i++){
-            if(this.board[row][col+i]!==null){
-                return false
-            }
-        }
-        return true
-    }
-    isValidVerticalPlacement(row,col,length){
-        if (row+length>this.size){
-            return false
-
-        }
-        for(let i=0;i<length;i++){
-            if(this.board[row+1][col]!==null){
-                return false
-            }
-        }
-        return true
-    }
-    getHorizontalCoordinates(row,col,length){
-        let coordinates=[]
-         for(let i = 0;i<length;i++){
-            coordinates.push(row,col+i)
-         }
-         return coordinates
-    
-    }
-    getVerticalCoordinates(row,col,length){
-        let coordinates=[]
-         for(let i = 0;i<length;i++){
-            coordinates.push(row+i,col)
-         }
-         return coordinates
-    
-    }
-    receiveAttack(coordinates){
-        message='';
-    const [row, col] = this.letterToNum(coordinates);
-        if(this.board=='hit' ||row>this.size ||col>this.size){
-            
-            message='invalid spot'
-            return message
-        }
-        else if (this.board[row,col]==null){
-            message="MISS!!!!";
-            return message;
-
-        }
-        this.board[row][col]='hit'
-        for(ship,scoordinates in this.ships){
-            if (coordinates in scoordinates){
-                ship.hit()
-            }
-        }
-        message='Hittt'
-        return message
+let ship= new Ship(3,"bertha")
 
 
-    }
-}
-class Player{
-    constructor(name='default',isComputer = false){
-        this.name = name;
-        this.isComputer = false;
-        this.gameboard=new GameBoard()
+let player1=new Player()
+let player2=new Player()
+setupBoardClickHandler('player2-board',player2)
 
-    }
-    attack(opp,coordinates){
-        return opp.gameboard.receiveAttack(coordinates)
-
-    }
-
-}
-ship=new GameBoard();
+player2.gameboard.placeShip(ship,'A7',3,'vertical')
+displayGrid(player1.gameboard,'player1-board')
+displayGrid(player1.gameboard,'start-board')
+displayGrid(player2.gameboard,'player2-board')
 console.log(ship.board)
 console.log("asdsad")
-module.exports={Ship,GameBoard}
->>>>>>> bc62416 (fixes)
+

@@ -1,4 +1,5 @@
-class Player{
+import { GameBoard } from './Gameboard.js';
+export class Player{
     constructor(name='default',isComputer = false){
         this.name = name;
         this.isComputer = false;

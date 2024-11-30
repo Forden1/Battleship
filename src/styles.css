@@ -1,0 +1,95 @@
+:root{
+    font-size: 1rem;
+    color: #f4f4f4;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #001f3f;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+#title{
+    color:#c0c0c0;
+    font-family: "Lacquer";
+    font-weight: 400;
+    font-style: normal;
+    font-size: 60pt;
+    text-shadow: 0 0 10px #c0c0c0;
+
+    
+}
+#main{
+    display: flex;
+    justify-content: space-around;
+}
+header{
+    display: flex;
+    justify-content: center;
+    background-color: #001f3f;
+    border-bottom: solid 2px black;
+    padding: 1rem;
+}
+.text-con{
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    
+}
+.text{
+    font-family: "Rye";
+    text-align: center;
+    width: 50%;
+    font-size: 2rem;
+    border: solid 5px #00aaff;
+    color: #f4f4f4;
+    padding: 1rem;
+
+}
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: #e0e0e0; /* Default color for empty cells */
+    border: 1px solid #ccc; /* Border around each cell */
+    position: relative; /* To position ship markers or hit/miss overlays */
+    cursor: pointer; /* Pointer cursor when the user hovers over a cell */
+}
+.board {
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(10, 40px); /* 10 columns, each 40px wide */
+    grid-template-rows: repeat(10, 40px); /* 10 rows, each 40px tall */
+    gap: 15px; /* Space between the cells */
+    border: 2px solid black; /* Border around the entire board */
+    margin: 0 auto; /* Center the board */
+    
+}
+.hidden{
+    display:none;
+    position: absolute;
+}
+.ship {
+    background-color: #333333; /* Dark Gray for the ship body */
+
+}
+.hit {
+    background-color: green;
+    border-radius: 50%;
+    animation: explode 0.3s ease-out;
+}
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.miss {
+    background-color: red;
+    border-radius: 50%;
+    animation: ripple 0.3s ease-out;
+}
+@keyframes ripple {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+

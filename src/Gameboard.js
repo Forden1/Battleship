@@ -1,4 +1,4 @@
-class GameBoard{
+export class GameBoard{
     constructor(size=10){
         this.size=size;
         this.ships=[];
@@ -30,7 +30,7 @@ class GameBoard{
         if (direction=='horizontal'){
             if (this.isValidHorizontalPlacement(row,col,length)==true){
                 for(let i=0;i<length;i++){
-                    this.board[row][col+i]=ship.name
+                    this.board[row][col+i]='ship'
                 }
                 this.ships.push({ship,coordinates:this.getHorizontalCoordinates(row,col,length)})
             }
@@ -40,7 +40,7 @@ class GameBoard{
 
             if (this.isValidVerticalPlacement(row,col,length)==true){
                 for(let i=0;i<length;i++){
-                    this.board[row+i][col]=ship
+                    this.board[row+i][col]='ship'
                 }
                 this.ships.push({ship,coordinates:this.getVerticalCoordinates(row,col,length)})
             }
@@ -94,7 +94,7 @@ class GameBoard{
     receiveAttack(coordinates){
        
         const [row, col] = this.letterToNum(coordinates);
-        if (row<0||col<0||row>=globalThis.size||col>=globalThis.size){
+        if (row<0||col<0||row>=this.size||col>=this.size){
             return "Invalid spot: out of bounds.";
         }
         if(this.board[row][col]=='hit' || this.board[row][col]=='miss'){
