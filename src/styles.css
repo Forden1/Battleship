@@ -118,6 +118,9 @@ header{
     display: flex;
     
     .ship{
+        border: black solid 2px;
+        width: 52px;
+        height: 52px;
         flex-grow: 0;
         flex-shrink: 0;
 

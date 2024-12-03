@@ -1,4 +1,5 @@
-const { Ship,GameBoard } = require('./index');
+import { Ship } from "./Ship";
+import { GameBoard } from "./Gameboard";
 
 describe("ship",()=>{
     let ship
@@ -52,18 +53,18 @@ describe("GameBoard",()=>{
     test("recive attack",()=>{
         let ship 
         ship = new Ship(3,'bertha'); 
-        game.placeShip(ship,'A3',3,'vertical')
+        game.placeShip(ship,'03',3,'vertical')
         
-        expect(game.receiveAttack("A3")).toBe("Hittt!")
+        expect(game.receiveAttack("03")).toBe("Hittt!")
     })
     test("sink ship vertical",()=>{
         let ship 
         ship = new Ship(3,'bertha'); 
-        game.placeShip(ship,'A3',3,'vertical')
-        game.receiveAttack("A4")
-        game.receiveAttack("A5")
+        game.placeShip(ship,'03',3,'horizontal')
+        game.receiveAttack("04")
+        game.receiveAttack("05")
         
-        expect(game.receiveAttack("A3")).toBe("Hit! You sunk the bertha!")
+        expect(game.receiveAttack("03")).toBe("Hit! You sunk the bertha!")
     })
     test("sink ship horizontal",()=>{
         let ship 

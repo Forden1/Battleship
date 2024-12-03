@@ -15,8 +15,11 @@ export class GameBoard{
         return board
     }
     letterToNum(coordinates) {
-        const x = coordinates[0].toUpperCase().charCodeAt(0) - 65;
-        return [parseInt(coordinates[1]),x];
+        // Split the coordinate string into row and column parts
+        const row = parseInt(coordinates[0]); // First character is row (parse as integer)
+        const col = parseInt(coordinates[1]); // Second character is column (parse as integer)
+        
+        return [row, col];  // Return as [row, col] array
     }
     areAllShipsSunk() {
         return this.ships.every(entry => entry.ship.isSunk());

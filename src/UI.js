@@ -1,6 +1,6 @@
 export function displayGrid(gameboard,name){
     const board=document.getElementById(name)
-
+    board.innerHTML = '';
     for(let row=0;row<gameboard.size;row++){
         for(let col=0;col<gameboard.size;col++){
             const cell = document.createElement('div');
@@ -36,7 +36,7 @@ ships.forEach(ship => {
 
 function mouseDown(e) {
     e.preventDefault();
-    activeShip = e.target;
+    activeShip = e.target.parentElement
   
     // Dynamically make the ship absolute and retain its position
 
@@ -60,31 +60,16 @@ function mouseDown(e) {
     activeShip.style.left = `${x}px`;
     activeShip.style.top = `${y}px`;
   }
-  
-  function mouseUp() {
-    // if (!activeShip) return;
-  
-    // // Snap to grid
-    // const gridRect = grid.getBoundingClientRect();
-    // const shipRect = activeShip.getBoundingClientRect();
-  
-    // // Calculate nearest grid cell
-    // const gridX = Math.round((shipRect.left - gridRect.left) / 50) * 50; // 50 is cell size
-    // const gridY = Math.round((shipRect.top - gridRect.top) / 50) * 50;
-  
-    // // Ensure ship stays within grid bounds
-    // const maxX = gridRect.width - shipRect.width;
-    // const maxY = gridRect.height - shipRect.height;
-  
-    // const finalX = Math.max(0, Math.min(gridX, maxX));
-    // const finalY = Math.max(0, Math.min(gridY, maxY));
-  
-    // activeShip.style.left = `${finalX + gridRect.left}px`;
-    // activeShip.style.top = `${finalY + gridRect.top}px`;
-  
-    // // Cleanup
-    // document.removeEventListener('mousemove', mouseMove);
-    // document.removeEventListener('mouseup', mouseUp);
-    // activeShip = null;
-  }
 
+function mouseUp(e) {
+    if (!activeShip) return;
+
+    // Remove event listeners for mouse move and mouse up
+    document.removeEventListener('mousemove', mouseMove);
+    document.removeEventListener('mouseup', mouseUp);
+
+    // Optional: Update the gameboard to reflect the new ship position
+    // After the ship is dropped, update the grid with the ship's new position.
+
+    activeShip = null;
+}
