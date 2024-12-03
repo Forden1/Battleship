@@ -1,6 +1,17 @@
 import { Player } from "./Player";
 import { GameBoard } from "./Gameboard";
 // GameController.js
+export function renderShip(div){
+    const ship=document.getElementById(`${div}`)
+    const length=ship.dataset.length
+
+    for(let i=0;i<length;i++){
+        const cell=document.createElement('div');
+        cell.classList.add('cell')
+        cell.classList.add('ship')
+        ship.appendChild(cell)
+    }
+}
 export function handleClick(cell,row,col,player){
     if (cell.classList.contains('ship')){
         cell.classList.remove("ship")
