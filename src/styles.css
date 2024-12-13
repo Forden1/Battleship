@@ -23,7 +23,7 @@ body{
 
     
 }
-#main{
+.main{
     display: grid;
     grid-template-columns: repeat(4, minmax(200px, 1fr));
 }
@@ -65,7 +65,7 @@ header{
     gap: 15px; /* Space between the cells */
     border: 2px solid black; /* Border around the entire board */
     margin: 0 auto; /* Center the board */
-    
+    max-height: 400px;
 }
 .hidden{
     display:none;
@@ -97,25 +97,39 @@ header{
 
 #start-board{
     grid-column: 2/3;
+    
 }
 #ship-container{
-    max-width: 20%;
+    max-width: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    align-items: flex-start;
+    justify-content: start;
+    gap: 1.4rem;
+    flex: 1;
+    padding: 0;
 }
-.ship-image.horizontal {
-    transform: rotate(0deg); /* Horizontal: no rotation */
+.horizontal {
+    transform: rotate(0deg); 
+    transform-origin: 0 0;
+    
+    
 }
 
-.ship-image.vertical {
-    transform: rotate(90deg); /* Vertical: 90 degrees rotation */
+.vertical {
+     transform-origin: 0  0;
+     transform: translate(100%, 0%)rotate(90deg) ;
+    transition: transform 0.3s ease;
 }
+
 #initial{
     grid-column: 4/5;
 }
 .Sship{
     display: flex;
+    
+    transition: transform 0.3s ease;
     
     .ship{
         border: black solid 2px;
@@ -125,4 +139,15 @@ header{
         flex-shrink: 0;
 
     }
+}
+.main2{
+    display: flex;
+    justify-content: space-around;
+}
+#ship-title{
+   
+    font-size: 2rem;
+    margin-bottom:0.5rem ;
+    padding: 0;
+    border: none;
 }

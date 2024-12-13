@@ -5,6 +5,7 @@ export class GameBoard{
         this.hits=[];
         this.misses=[];
         this.board=this.createEmptyBoard();
+        this.hitTargets =[];
 
     }
     createEmptyBoard(){
@@ -21,6 +22,11 @@ export class GameBoard{
         
         return [row, col];  // Return as [row, col] array
     }
+    numToLetter(row, col) {
+        return row.toString() + col.toString();  // Concatenate row and column into a string
+    }
+    
+
     areAllShipsSunk() {
         return this.ships.every(entry => entry.ship.isSunk());
     }
@@ -36,6 +42,7 @@ export class GameBoard{
                     this.board[row][col+i]='ship'
                 }
                 this.ships.push({ship,coordinates:this.getHorizontalCoordinates(row,col,length)})
+                return true
             }
 
         }
@@ -46,13 +53,13 @@ export class GameBoard{
                     this.board[row+i][col]='ship'
                 }
                 this.ships.push({ship,coordinates:this.getVerticalCoordinates(row,col,length)})
+                return true
             }
 
 
 
         }
-        // return this.ships
-
+        return "failed to place th sipspsdispdip"
     }
     isValidHorizontalPlacement(row,col,length){
         if (col+length>this.size){
